@@ -4,7 +4,7 @@
 Este trabajo tiene por finalidad hacer uso de técnicas de IA para
 generación de un "chatbot" que permita hacerle preguntas a los [libros de la colección Pedagogía y Cultura](https://isep-cba.edu.ar/web/coleccion-libros/).
 
-Técnica usada: *Retrieval-Augmented Generation (RAG)*.
+Técnica usada: [*Retrieval-Augmented Generation (RAG)*](https://research.ibm.com/blog/retrieval-augmented-generation-RAG).
 
 # APP Online (sólo para hacer pruebas)
 
