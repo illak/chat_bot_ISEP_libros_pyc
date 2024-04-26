@@ -10,6 +10,7 @@ Técnica usada: *Retrieval-Augmented Generation (RAG)*.
 
 [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://appapppy-6mknyufwrzxhkxzknsewmt.streamlit.app/)
 
+⚠️ Es importante tener en cuenta que la versión demo de la aplicación no está diseñada para escenarios de uso a gran escala, donde múltiples usuarios acceden simultáneamente. Esta versión está destinada exclusivamente para propósitos de prueba y su uso está limitado a un número reducido de usuarios
 
 # Aspectos a tener en cuenta
 
