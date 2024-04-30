@@ -65,10 +65,10 @@ def load_pdf_text():
             with pdfplumber.open(f) as pdf:
                 print(len(pdf.pages))
                 for page in pdf.pages:
-                    text += page.extract_text().strip()
+                    text += page.extract_text()
 
                     # Limpieza
-                    text = re.sub(r" +", " ", text)
+                    #text = re.sub(r" +", " ", text)
                     text = re.sub(r'\n', ' ', text)
 
     return text
@@ -77,7 +77,7 @@ def load_pdf_text():
 # split text into chunks
 def get_text_chunks(text):
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000, chunk_overlap=400) # chunk_overlap 1000
+        chunk_size=1500, chunk_overlap=200) # chunk_overlap 1000
     chunks = splitter.split_text(text)
     return chunks  # list of strings
 
@@ -94,7 +94,7 @@ def get_conversational_chain():
 
     prompt_template = """
     Responder a la pregunta del usuario lo más detallademente posible. Si la respuesta no se encuentra
-    en el contexto provisto responder: "Lo siento, no tengo información al respecto...", no devuelva una respuesta incorrecta.\n\n
+    en el contexto provisto responda que no encontró información en dicho contexto, no devuelva una respuesta incorrecta.\n\n
 
     Contexto: {context}\n\n
 
@@ -106,7 +106,7 @@ def get_conversational_chain():
     model = ChatGoogleGenerativeAI(model="gemini-pro",
                                    client=genai,
                                    temperature=0.3,
-                                   maxOutputTokens=2000,
+                                   maxOutputTokens=2500,
                                    safety_settings=SAFETY_SETTINGS
                                    )
     
@@ -131,7 +131,7 @@ def user_input(user_question):
 
     new_db = FAISS.load_local("faiss_index", embeddings, allow_dangerous_deserialization=True)
     
-    docs = new_db.similarity_search(user_question)
+    docs = new_db.similarity_search(user_question, k = 6)
 
     print(len(docs))
     print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
