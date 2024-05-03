@@ -41,7 +41,7 @@ def load_pdfs():
     directory = "libros_pyc"
 
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2000,
+        chunk_size=2500,
         chunk_overlap=400) # chunk_overlap 1000
 
     embeddings = GoogleGenerativeAIEmbeddings(
@@ -76,7 +76,10 @@ def load_pdfs():
             print(vectorstore.index.ntotal)
 
 
-    retriever = vectorstore.as_retriever()
+    retriever = vectorstore.as_retriever(
+        search_type="mmr",
+        search_kwargs={'k': 6, 'lambda_mult': 0.25}
+    )
     # Devolvemos retriever
     return retriever
 
@@ -102,8 +105,9 @@ def get_conversational_chain(retriever):
 
     prompt_template = """Responder a la pregunta del usuario lo más detallademente posible. Si la respuesta no se encuentra
 en el contexto provisto responda que no encontró información en dicho contexto, no devuelva una respuesta incorrecta.\n\n
-
-Contexto: {context}\n\n
+-------------------------------
+Contexto: {context}\n
+-------------------------------\n
 
 Pregunta: {question}\n
 
