@@ -158,8 +158,7 @@ def user_input(user_question, retriever):
 def main(): 
     st.set_page_config(
         page_title="Gemini PDF Chatbot",
-        page_icon="📚",
-        layout="wide"
+        page_icon="📚"
     )
 
     # Custom HTML/CSS for the banner
