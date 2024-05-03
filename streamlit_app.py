@@ -214,7 +214,7 @@ def main():
 
     if "messages" not in st.session_state.keys():
         st.session_state.messages = [
-            {"role": "assistant", "content": "Escriba preguntas sobre el documento"}]
+            {"role": "assistant", "content": "Escriba alguna pregunta sobre los libros"}]
 
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
