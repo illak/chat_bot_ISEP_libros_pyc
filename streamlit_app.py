@@ -59,10 +59,11 @@ def load_pdfs():
 
             data = loader.load()
 
-            print("==========================")
-            print(data[11])
-            print(data[12])
-            print("==========================")
+            for document in data:
+                # Unifico división silábica por salto de línea
+                document.page_content = re.sub(r'-\n', '', document.page_content)
+                document.page_content = re.sub(r'(?<!\.)\n', ' ', document.page_content)
+
 
             splits = splitter.split_documents(data)
 
