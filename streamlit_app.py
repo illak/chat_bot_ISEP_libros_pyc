@@ -18,6 +18,8 @@ from langchain_core.output_parsers import StrOutputParser
 from google.generativeai.types.safety_types import HarmBlockThreshold, HarmCategory
 
 from langchain_core.runnables import RunnablePassthrough
+import streamlit.components.v1 as components
+
 
 
 SAFETY_SETTINGS = {
@@ -178,7 +180,7 @@ def main():
     </style>
     """
     # Display the custom HTML
-    st.components.v1.html(custom_html)
+    components.html(custom_html)
 
 
 
