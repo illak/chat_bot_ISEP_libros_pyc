@@ -156,8 +156,34 @@ def user_input(user_question, retriever):
 def main(): 
     st.set_page_config(
         page_title="Gemini PDF Chatbot",
-        page_icon="🤖"
+        page_icon="📚",
+        layout="wide"
     )
+
+    # Custom HTML/CSS for the banner
+    custom_html = """
+    <div class="banner">
+        <img src="imgs/pyc_header.jpg" alt="Banner Image">
+    </div>
+    <style>
+        .banner {
+            width: 160%;
+            height: 200px;
+            overflow: hidden;
+        }
+        .banner img {
+            width: 100%;
+            object-fit: cover;
+        }
+    </style>
+    """
+    # Display the custom HTML
+    st.components.v1.html(custom_html)
+
+
+
+
+
 
     # Cargamos los libros de PYC al INICIO
     with st.spinner("Procesando PDFs..."):
@@ -177,7 +203,7 @@ def main():
 
 
     # Main content area for displaying chat messages
-    st.title("Chateando con los libros de Pedagogía y Cultura (ISEP) 🤖")
+    st.title("Chateando con los libros de Pedagogía y Cultura (ISEP) 📚")
     st.write("Bienvenido al chat!")
     st.sidebar.button('Limpiar chat', on_click=clear_chat_history)
 
