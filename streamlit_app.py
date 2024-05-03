@@ -169,7 +169,7 @@ def main():
     <style>
         .banner {
             width: 100%;
-            height: 500px;
+            height: auto;
             overflow: contain;
         }
         .banner img {
