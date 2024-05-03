@@ -169,12 +169,11 @@ def main():
     <style>
         .banner {
             width: 160%;
-            height: 200px;
             overflow: hidden;
         }
         .banner img {
             width: 100%;
-            object-fit: contain;
+            object-fit: scale-down;
         }
     </style>
     """
