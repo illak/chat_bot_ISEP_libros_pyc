@@ -165,7 +165,7 @@ def main():
     # Custom HTML/CSS for the banner
     custom_html = """
     <div class="banner">
-        <img src="./imgs/pyc_header.jpg" alt="Banner Image">
+        <img src="https://isep-cba.edu.ar/web/wp-content/uploads/2023/05/encabezado_ColeccionPyC-1024x474.jpg" alt="Banner Image">
     </div>
     <style>
         .banner {
