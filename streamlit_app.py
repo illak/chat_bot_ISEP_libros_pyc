@@ -179,7 +179,8 @@ def main():
     </style>
     """
     # Display the custom HTML
-    components.html(custom_html)
+    #components.html(custom_html)
+    st.image('./imgs/pyc_header.jpg', caption='Colección Pedagogía y Cultura')
 
 
 
@@ -204,7 +205,7 @@ def main():
 
 
     # Main content area for displaying chat messages
-    st.title("Chateando con los libros de Pedagogía y Cultura (ISEP) 📚")
+    st.header("Chateando con los libros de Pedagogía y Cultura (ISEP) 📚")
     st.write("Bienvenido al chat!")
     st.sidebar.button('Limpiar chat', on_click=clear_chat_history)
 
