@@ -168,8 +168,9 @@ def main():
     </div>
     <style>
         .banner {
-            width: 160%;
-            overflow: hidden;
+            width: 100%;
+            height: 500px;
+            overflow: contain;
         }
         .banner img {
             width: 100%;
