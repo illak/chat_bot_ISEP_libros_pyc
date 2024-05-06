@@ -43,8 +43,8 @@ def load_pdfs():
     directory = "libros_pyc"
 
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=2500,
-        chunk_overlap=400) # chunk_overlap 1000
+        chunk_size=3000,
+        chunk_overlap=800) # chunk_overlap 1000
 
     embeddings = GoogleGenerativeAIEmbeddings(
         model="models/embedding-001")  # type: ignore
@@ -59,15 +59,14 @@ def load_pdfs():
             print(f)
             loader = PDFPlumberLoader(f)
 
-            data = loader.load()
+            docs = loader.load()
 
-            for document in data:
+            for document in docs:
                 # Unifico división silábica por salto de línea
                 document.page_content = re.sub(r'-\n', '', document.page_content)
-                document.page_content = re.sub(r'(?<!\.)\n', ' ', document.page_content)
+                #document.page_content = re.sub(r'(?<!\.)\n', ' ', document.page_content)
 
-
-            splits = splitter.split_documents(data)
+            splits = splitter.split_documents(docs)
 
             #vectorstore = Chroma.from_documents(documents=splits, embedding=embeddings, persist_directory="./chroma_db")
             if index == 0:
@@ -78,11 +77,12 @@ def load_pdfs():
 
             print(vectorstore.index.ntotal)
 
-
     retriever = vectorstore.as_retriever(
         search_type="mmr",
-        search_kwargs={'k': 6, 'lambda_mult': 0.25}
+        k=5, k_fetch=15, 
+        lambda_mult=0.5
     )
+
     # Devolvemos retriever
     return retriever
 
@@ -108,9 +108,10 @@ def get_conversational_chain(retriever):
 
     prompt_template = """Responder a la pregunta del usuario lo más detallademente posible. Si la respuesta no se encuentra
 en el contexto provisto responda que no encontró información en dicho contexto, no devuelva una respuesta incorrecta.\n\n
--------------------------------
-Contexto: {context}\n
--------------------------------\n
+
+Al final agregue una reflexión usando datos externos (sólo si es posible y usando un contexto educativo).
+
+Contexto: {context}\n\n
 
 Pregunta: {question}\n
 
@@ -120,7 +121,7 @@ Respuesta:
     model = ChatGoogleGenerativeAI(model="gemini-pro",
                                    client=genai,
                                    temperature=0.3,
-                                   maxOutputTokens=2500,
+                                   maxOutputTokens=3000,
                                    safety_settings=SAFETY_SETTINGS
                                    )
     
@@ -181,10 +182,6 @@ def main():
     # Display the custom HTML
     #components.html(custom_html)
     st.image('./imgs/pyc_header.jpg', caption='Colección Pedagogía y Cultura')
-
-
-
-
 
 
     # Cargamos los libros de PYC al INICIO
