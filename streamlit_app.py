@@ -44,7 +44,7 @@ def load_pdfs():
 
     splitter = RecursiveCharacterTextSplitter(
         chunk_size=3000,
-        chunk_overlap=800) # chunk_overlap 1000
+        chunk_overlap=500) # chunk_overlap 1000
 
     embeddings = GoogleGenerativeAIEmbeddings(
         model="models/embedding-001")  # type: ignore
@@ -64,7 +64,8 @@ def load_pdfs():
             for document in docs:
                 # Unifico división silábica por salto de línea
                 document.page_content = re.sub(r'-\n', '', document.page_content)
-                #document.page_content = re.sub(r'(?<!\.)\n', ' ', document.page_content)
+                # limpiamos ocurrencias de '\n' entre palabras
+                document.page_content = re.sub(r'(?<!\.)\n(?!\.)', ' ', document.page_content)
 
             splits = splitter.split_documents(docs)
 
@@ -79,7 +80,7 @@ def load_pdfs():
 
     retriever = vectorstore.as_retriever(
         search_type="mmr",
-        k=5, k_fetch=15, 
+        k=5, k_fetch=20, 
         lambda_mult=0.5
     )
 
@@ -132,8 +133,7 @@ Respuesta:
 
     chain = (
         {"context": retriever | format_docs, "question": RunnablePassthrough()}
-        | prompt 
-        | debug_prompt
+        | prompt
         | model 
         | StrOutputParser()
     )
